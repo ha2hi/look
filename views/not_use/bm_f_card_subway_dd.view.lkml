@@ -51,4 +51,21 @@ view: bm_f_card_subway_dd {
     type: count
     drill_fields: []
   }
+
+  parameter: p_choose_date {
+    view_label: "Date_Parameter"
+    type: date
+  }
+
+  dimension: cal_14_days_ago {
+    type: date
+    sql: DATE_SUB(date({% parameter p_choose_date%}), INTERVAL 14 DAY) ;;
+  }
+
+  dimension: period {
+    type: string
+    sql: case when ${dt_date} >= ${cal_14_days_ago}
+              and ${dt_date} <= date({% parameter p_choose_date%}) then "yes"
+          else "no" end ;;
+  }
 }

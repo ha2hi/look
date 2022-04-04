@@ -1,4 +1,4 @@
-view: bm_f_passenger_subway_dd {
+view: bm_f_passenger_subway_test {
   sql_table_name: `project_a_team.bm_f_passenger_subway_dd`
     ;;
 

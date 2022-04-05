@@ -39,7 +39,7 @@ view: bm_f_passenger_subway_line {
   measure: line_clean_transported_cnt {
     label: "호선별 순수송인원"
     type: number
-    sql: sum(${TABLE}.line_clean_transported_cnt) ;;
+    sql: abs(sum(${TABLE}.line_clean_transported_cnt)) ;;
   }
 
   measure: line_foot_traffic_cnt {

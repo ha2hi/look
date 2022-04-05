@@ -33,7 +33,24 @@ view: bm_f_passenger_subway_period {
             , '순수송 인원수' as gubun
             , sum(clean_transported_cnt) as  cnt
       from `project_a_team.bm_f_passenger_subway_dd`
-      group by dt, passenger_type_cd;;
+      group by dt, passenger_type_cd
+
+      union all
+
+      select a.dt
+            , passenger_type_cd
+            , '수송분담율' as gubun
+            , sum(clean_transported_cnt) / max(total_clean) as cnt
+      from `project_a_team.bm_f_passenger_subway_dd` a
+      left join
+      (
+        select dt, sum(clean_transported_cnt) as total_clean
+        from `project_a_team.bm_f_passenger_subway_dd`
+        group by 1
+      )c
+      on a.dt = c.dt
+      group by dt, passenger_type_cd
+      ;;
   }
 
 
@@ -52,6 +69,7 @@ view: bm_f_passenger_subway_period {
     datatype: date
     sql: ${TABLE}.dt ;;
   }
+
 
   dimension: station_cd {
     type: string
@@ -93,7 +111,6 @@ view: bm_f_passenger_subway_period {
 
 
 
-
   dimension: period {
     type: string
     sql: case when ${dt_date} >= date({% parameter p_date_from%})
@@ -102,6 +119,7 @@ view: bm_f_passenger_subway_period {
                     and ${dt_date} <= date_sub(date({% parameter p_date_to%}), interval 1 month) then "전기"
         end ;;
   }
+
 
   # measure: now_passenger_cnt {
   #   label: "당기"

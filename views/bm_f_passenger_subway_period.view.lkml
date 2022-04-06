@@ -31,26 +31,10 @@ view: bm_f_passenger_subway_period {
       select dt
             , passenger_type_cd
             , '순수송 인원수' as gubun
-            , (sum(abs(clean_transported_cnt)) as  cnt
+            , abs(sum(clean_transported_cnt)) as  cnt
       from `project_a_team.bm_f_passenger_subway_dd`
-      group by dt, passenger_type_cd
+      group by dt, passenger_type_cd ;;
 
-      union all
-
-      select a.dt
-            , passenger_type_cd
-            , '수송분담율' as gubun
-            , sum(clean_transported_cnt) / max(total_clean) as cnt
-      from `project_a_team.bm_f_passenger_subway_dd` a
-      left join
-      (
-        select dt, sum(clean_transported_cnt) as total_clean
-        from `project_a_team.bm_f_passenger_subway_dd`
-        group by 1
-      )c
-      on a.dt = c.dt
-      group by dt, passenger_type_cd
-      ;;
   }
 
 

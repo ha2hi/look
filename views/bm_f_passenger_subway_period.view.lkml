@@ -31,7 +31,7 @@ view: bm_f_passenger_subway_period {
       select dt
             , passenger_type_cd
             , '순수송 인원수' as gubun
-            , sum(abs(clean_transported_cnt)) as  cnt
+            , abs(sum(clean_transported_cnt)) as  cnt
       from `project_a_team.bm_f_passenger_subway_dd`
       group by dt, passenger_type_cd
 

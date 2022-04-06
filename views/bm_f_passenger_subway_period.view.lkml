@@ -40,7 +40,7 @@ view: bm_f_passenger_subway_period {
       select a.dt
             , passenger_type_cd
             , '수송분담율' as gubun
-            , sum(abs(clean_transported_cnt)) / max(total_clean) as cnt
+            , abs(sum(clean_transported_cnt)) / max(total_clean) as cnt
       from `project_a_team.bm_f_passenger_subway_dd` a
       left join
       (

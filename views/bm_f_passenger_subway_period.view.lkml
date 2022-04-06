@@ -114,9 +114,9 @@ view: bm_f_passenger_subway_period {
   dimension: period {
     type: string
     sql: case when ${dt_date} >= date({% parameter p_date_from%})
-                    and ${dt_date} <= date({% parameter p_date_to%}) then "당기"
+                    and ${dt_date} <= date({% parameter p_date_to%}) then "당월"
               when ${dt_date} >= date_sub(date({% parameter p_date_from%}), interval 1 month)
-                    and ${dt_date} <= date_sub(date({% parameter p_date_to%}), interval 1 month) then "전기"
+                    and ${dt_date} <= date_sub(date({% parameter p_date_to%}), interval 1 month) then "전월"
         end ;;
   }
 
